@@ -1,0 +1,88 @@
+// =====================================================================
+// DAX MEASURES  (create a blank table called "_Measures" and add these)
+// Tables: dim_date, dealers, sales, service_jobs, inventory, campaigns,
+//         web_sessions, feedback, call_logs   (see data_model.md)
+// =====================================================================
+
+// ---------- SALES ----------
+Total Sales = SUM ( sales[amount] )
+Orders = COUNTROWS ( sales )
+Avg Order Value (Sales) = DIVIDE ( [Total Sales], [Orders] )
+Sales LY = CALCULATE ( [Total Sales], SAMEPERIODLASTYEAR ( dim_date[date] ) )
+Sales YoY % = DIVIDE ( [Total Sales] - [Sales LY], [Sales LY] )
+Sales MoM % =
+VAR prev = CALCULATE ( [Total Sales], DATEADD ( dim_date[date], -1, MONTH ) )
+RETURN DIVIDE ( [Total Sales] - prev, prev )
+Sales YTD = TOTALYTD ( [Total Sales], dim_date[date] )
+Monthly Target = SUM ( dealers[monthly_target] )
+Target (Selected Period) = [Monthly Target] * DISTINCTCOUNT ( dim_date[year_month] )
+Target Achievement % = DIVIDE ( [Total Sales], [Target (Selected Period)] )
+Dealer Rank = RANKX ( ALL ( dealers[dealer_name] ), [Total Sales], , DESC, DENSE )
+Revenue Share % = DIVIDE ( [Total Sales], CALCULATE ( [Total Sales], ALL ( sales[product] ) ) )
+
+// ---------- DIGITAL ----------
+Sessions = COUNTROWS ( web_sessions )
+Orders (Web) = SUM ( web_sessions[converted] )
+Conversion % = DIVIDE ( [Orders (Web)], [Sessions] )
+AOV =
+DIVIDE (
+    CALCULATE ( SUM ( web_sessions[order_value] ), web_sessions[converted] = 1 ),
+    [Orders (Web)]
+)
+Chatbot Escalation % =
+DIVIDE (
+    CALCULATE ( SUM ( web_sessions[chatbot_escalated] ), web_sessions[platform] = "Chatbot" ),
+    CALCULATE ( [Sessions], web_sessions[platform] = "Chatbot" )
+)
+Mobile Conversion % = CALCULATE ( [Conversion %], web_sessions[device] = "Mobile" )
+Desktop Conversion % = CALCULATE ( [Conversion %], web_sessions[device] = "Desktop" )
+
+// ---------- SERVICE & INVENTORY ----------
+Service Revenue = SUM ( service_jobs[revenue] )
+Avg TAT (days) = AVERAGE ( service_jobs[tat_days] )
+Delayed Jobs % = DIVIDE ( CALCULATE ( COUNTROWS ( service_jobs ), service_jobs[tat_flag] = "Delayed" ), COUNTROWS ( service_jobs ) )
+TAT vs Network =
+VAR network = CALCULATE ( [Avg TAT (days)], ALL ( dealers ) )
+RETURN DIVIDE ( [Avg TAT (days)] - network, network )
+Latest Snapshot = MAX ( inventory[snapshot_date] )
+Stock Units = CALCULATE ( SUM ( inventory[stock_qty] ), inventory[snapshot_date] = [Latest Snapshot] )
+Aged Stock Units (90+) =
+CALCULATE ( SUM ( inventory[stock_qty] ), inventory[snapshot_date] = [Latest Snapshot], inventory[aging_bucket] = "90+" )
+Aged Stock % = DIVIDE ( [Aged Stock Units (90+)], [Stock Units] )
+
+// ---------- MARKETING ----------
+Spend = SUM ( campaigns[spend] )
+Leads = SUM ( campaigns[leads] )
+Conversions (Campaign) = SUM ( campaigns[conversions] )
+Gross Profit Attributed = SUM ( campaigns[gross_profit_attributed] )
+Cost per Lead = DIVIDE ( [Spend], [Leads] )
+Cost per Conversion = DIVIDE ( [Spend], [Conversions (Campaign)] )
+Campaign ROI (x) = DIVIDE ( [Gross Profit Attributed] - [Spend], [Spend] )
+Lead to Conversion % = DIVIDE ( [Conversions (Campaign)], [Leads] )
+
+// ---------- NPS / VoC ----------
+Responses = COUNTROWS ( feedback )
+Promoters = CALCULATE ( [Responses], feedback[nps_category] = "Promoter" )
+Detractors = CALCULATE ( [Responses], feedback[nps_category] = "Detractor" )
+NPS = DIVIDE ( [Promoters] - [Detractors], [Responses] ) * 100
+Promoter % = DIVIDE ( [Promoters], [Responses] )
+Detractor % = DIVIDE ( [Detractors], [Responses] )
+NPS Prev Month = CALCULATE ( [NPS], DATEADD ( dim_date[date], -1, MONTH ) )
+NPS Change = [NPS] - [NPS Prev Month]
+NPS Colour = SWITCH ( TRUE (), [NPS] >= 30, "#16a34a", [NPS] >= 0, "#f59e0b", "#dc2626" )   // conditional-format helper
+
+// ---------- CALL CENTRE ----------
+Calls = COUNTROWS ( call_logs )
+Resolution % = DIVIDE ( CALCULATE ( [Calls], call_logs[resolved] = 1 ), [Calls] )
+Avg Handle Time (min) = AVERAGE ( call_logs[duration_min] )
+Avg CSAT = AVERAGE ( call_logs[csat] )
+Negative Calls % = DIVIDE ( CALCULATE ( [Calls], call_logs[sentiment] = "Negative" ), [Calls] )
+Share of All Negative Calls =
+DIVIDE (
+    CALCULATE ( [Calls], call_logs[sentiment] = "Negative" ),
+    CALCULATE ( [Calls], call_logs[sentiment] = "Negative", ALL ( call_logs[issue_type] ) )
+)
+Agent CSAT Quartile =
+VAR r = RANKX ( ALL ( call_logs[agent_id] ), [Avg CSAT], , DESC, DENSE )
+VAR n = DISTINCTCOUNT ( call_logs[agent_id] )   // note: use ALL() context in a visual for exact counts
+RETURN ROUNDUP ( r / ( n / 4 ), 0 )

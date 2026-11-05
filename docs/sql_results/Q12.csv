@@ -1,0 +1,10 @@
+platform,device,sessions,conversion_pct
+Chatbot,Tablet,751,4.26
+Chatbot,Desktop,4384,4.08
+Chatbot,Mobile,9640,3.2
+Connected App,Desktop,2646,6.12
+Connected App,Tablet,426,4.46
+Connected App,Mobile,5693,3.86
+Website,Desktop,10667,5.99
+Website,Tablet,1813,5.57
+Website,Mobile,23380,3.99

@@ -1,0 +1,29 @@
+dealer_name,region,avg_tat,delayed_pct,service_rev_mn,status
+Patna Motors 2,East,5.28,50.5,7.05,RED FLAG
+Patna Motors 1,East,5.04,53.0,7.27,RED FLAG
+Kolkata Motors 2,East,4.98,53.4,7.13,RED FLAG
+Kolkata Motors 1,East,4.6,50.3,6.89,RED FLAG
+Kochi Motors 2,South,2.77,2.2,7.84,OK
+Bhubaneswar Motors 2,East,2.74,2.8,7.09,OK
+Delhi Motors 2,North,2.68,1.2,6.78,OK
+Bangalore Motors 1,South,2.68,2.4,6.97,OK
+Ahmedabad Motors 1,West,2.68,2.2,7.1,OK
+Hyderabad Motors 2,South,2.66,1.8,6.89,OK
+Chandigarh Motors 1,North,2.65,2.8,7.07,OK
+Pune Motors 1,West,2.63,1.1,7.09,OK
+Bhubaneswar Motors 1,East,2.63,1.7,6.41,OK
+Mumbai Motors 1,West,2.62,1.5,6.45,OK
+Mumbai Motors 2,West,2.62,1.7,6.65,OK
+Ahmedabad Motors 2,West,2.62,3.1,6.65,OK
+Guwahati Motors 1,East,2.61,2.3,6.04,OK
+Chennai Motors 1,South,2.6,1.2,6.36,OK
+Kochi Motors 1,South,2.6,2.2,6.54,OK
+Delhi Motors 1,North,2.59,1.7,6.63,OK
+Bangalore Motors 2,South,2.58,1.2,6.15,OK
+Guwahati Motors 2,East,2.58,2.4,6.25,OK
+Lucknow Motors 1,North,2.57,1.7,6.79,OK
+Chandigarh Motors 2,North,2.55,1.9,6.55,OK
+Lucknow Motors 2,North,2.54,0.7,6.24,OK
+Hyderabad Motors 1,South,2.54,2.4,6.94,OK
+Chennai Motors 2,South,2.51,1.1,6.1,OK
+Pune Motors 2,West,2.49,1.6,5.89,OK

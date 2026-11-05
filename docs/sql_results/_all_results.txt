@@ -1,0 +1,214 @@
+
+=== Q1: Overall KPI snapshot ===
+ sales_crore  vehicles_and_accessory_orders  web_conversion_pct     aov  nps  call_resolution_pct
+     1500.43                          18000                4.37 58444.0  7.8                 70.0
+
+=== Q2: Monthly sales trend with month-over-month growth (window: LAG) ===
+year_month  sales_mn  mom_pct
+   2024-01     475.6      NaN
+   2024-02     452.2     -4.9
+   2024-03     526.6     16.4
+   2024-04     464.1    -11.9
+   2024-05     472.0      1.7
+   2024-06     417.5    -11.5
+   2024-07     428.7      2.7
+   2024-08     473.8     10.5
+   2024-09     483.5      2.0
+   2024-10    1113.0    130.2
+   2024-11    1041.4     -6.4
+   2024-12    1073.7      3.1
+
+=== Q3: Dealer sales rank within each region (window: RANK) ===
+region          dealer_name  sales_mn  region_rank
+  East Bhubaneswar Motors 1     617.2            1
+  East    Guwahati Motors 1     524.3            2
+  East Bhubaneswar Motors 2     475.1            3
+  East    Guwahati Motors 2     462.8            4
+  East     Kolkata Motors 1     385.8            5
+  East       Patna Motors 2     385.4            6
+  East     Kolkata Motors 2     372.0            7
+  East       Patna Motors 1     363.3            8
+ North  Chandigarh Motors 2     678.6            1
+ North  Chandigarh Motors 1     617.7            2
+ North       Delhi Motors 2     595.7            3
+ North     Lucknow Motors 1     552.3            4
+
+=== Q4: Dealer sales vs target (achievement %)  - target is monthly, so x24 months ===
+         dealer_name region  actual_mn  target_mn  achievement_pct
+       Pune Motors 2   West      646.5      447.3            144.5
+    Lucknow Motors 1  North      552.3      454.6            121.5
+       Pune Motors 1   West      665.8      565.1            117.8
+     Mumbai Motors 1   West      628.9      538.4            116.8
+ Chandigarh Motors 2  North      678.6      599.4            113.2
+      Delhi Motors 2  North      595.7      537.3            110.9
+    Chennai Motors 1  South      488.8      462.7            105.6
+   Guwahati Motors 2   East      462.8      442.5            104.6
+      Kochi Motors 2  South      653.4      629.5            103.8
+     Mumbai Motors 2   West      494.4      486.5            101.6
+Bhubaneswar Motors 1   East      617.2      618.8             99.7
+Bhubaneswar Motors 2   East      475.1      478.7             99.2
+
+=== Q5: Product mix share of revenue (window: SUM OVER) ===
+         product  orders  revenue_mn  revenue_share_pct
+             SUV    4536      6105.1               40.7
+           Sedan    3534      3357.0               22.4
+       Hatchback    5037      3273.7               21.8
+              EV    1319      2107.6               14.0
+Accessories Pack    3574       161.0                1.1
+
+=== Q6: Festive-quarter (Oct-Dec) lift vs rest of year ===
+ is_festive_q  orders  revenue_mn  avg_monthly_revenue_mn
+            0   10165      8456.3                   469.8
+            1    7835      6548.0                  1091.3
+
+=== Q7: Service TAT by dealer, flag dealers above network average (CTE + subquery) ===
+         dealer_name region  avg_tat  delayed_pct  service_rev_mn   status
+      Patna Motors 2   East     5.28         50.5            7.05 RED FLAG
+      Patna Motors 1   East     5.04         53.0            7.27 RED FLAG
+    Kolkata Motors 2   East     4.98         53.4            7.13 RED FLAG
+    Kolkata Motors 1   East     4.60         50.3            6.89 RED FLAG
+      Kochi Motors 2  South     2.77          2.2            7.84       OK
+Bhubaneswar Motors 2   East     2.74          2.8            7.09       OK
+      Delhi Motors 2  North     2.68          1.2            6.78       OK
+  Bangalore Motors 1  South     2.68          2.4            6.97       OK
+  Ahmedabad Motors 1   West     2.68          2.2            7.10       OK
+  Hyderabad Motors 2  South     2.66          1.8            6.89       OK
+ Chandigarh Motors 1  North     2.65          2.8            7.07       OK
+       Pune Motors 1   West     2.63          1.1            7.09       OK
+
+=== Q8: Service revenue and TAT by job type ===
+        job_type  jobs  avg_revenue  avg_tat_days
+Periodic Service  8096       6495.0          1.78
+          Repair  4995      14091.0          3.57
+        Warranty  2944          0.0          4.11
+   Wash & Detail  2342       1206.0          0.59
+ Accident Repair  1623      38212.0          8.33
+
+=== Q9: Inventory aging - stock sitting 90+ days (latest snapshot only) ===
+         dealer_name region  units_in_stock  units_90plus_days  aged_pct
+      Patna Motors 2   East              89                 47      52.8
+    Kolkata Motors 1   East              94                 42      44.7
+   Guwahati Motors 2   East              48                 15      31.3
+ Chandigarh Motors 2  North              43                 13      30.2
+      Patna Motors 1   East             102                 29      28.4
+    Kolkata Motors 2   East              94                 26      27.7
+   Guwahati Motors 1   East              56                 13      23.2
+    Chennai Motors 1  South              61                 11      18.0
+    Chennai Motors 2  South              54                  6      11.1
+Bhubaneswar Motors 2   East              58                  0       0.0
+
+=== Q10: Stock-to-sales ratio per dealer (months of cover, last 12 months) ===
+         dealer_name  stock  avg_monthly_units_sold  months_of_cover
+      Patna Motors 1    102                    15.2             6.73
+    Kolkata Motors 1     94                    14.8             6.34
+    Kolkata Motors 2     94                    15.1             6.23
+      Patna Motors 2     89                    15.9             5.59
+    Chennai Motors 1     61                    17.8             3.42
+Bhubaneswar Motors 2     58                    19.2             3.03
+  Ahmedabad Motors 2     64                    21.6             2.97
+  Bangalore Motors 1     68                    23.2             2.94
+  Bangalore Motors 2     62                    21.5             2.88
+    Lucknow Motors 1     62                    21.8             2.84
+
+=== Q11: Conversion rate and AOV by traffic source ===
+        source  sessions  orders  conversion_pct     aov
+   Paid Social     15283     150            0.98 62644.0
+ Google Search     12584     741            5.89 57033.0
+       Organic      8932     401            4.49 57538.0
+Offline/Events      7741     361            4.66 57938.0
+      WhatsApp      6197     438            7.07 60759.0
+         Email      5137     405            7.88 59236.0
+    Influencer      4126     127            3.08 55507.0
+
+=== Q12: Conversion by platform x device (website / chatbot / connected app) ===
+     platform  device  sessions  conversion_pct
+      Chatbot  Tablet       751            4.26
+      Chatbot Desktop      4384            4.08
+      Chatbot  Mobile      9640            3.20
+Connected App Desktop      2646            6.12
+Connected App  Tablet       426            4.46
+Connected App  Mobile      5693            3.86
+      Website Desktop     10667            5.99
+      Website  Tablet      1813            5.57
+      Website  Mobile     23380            3.99
+
+=== Q13: Chatbot performance: escalated vs resolved-in-bot sessions ===
+           outcome  sessions  conversion_pct  avg_page_views
+    Handled by bot     10424            4.43             6.0
+Escalated to human      4486            1.52             6.0
+
+=== Q14: Campaign ROI and cost per lead by channel ===
+       channel  spend_mn  leads  conversions  cost_per_lead  cost_per_conversion  lead_to_conv_pct  roi_x
+         Email     46.28 399793        20850          116.0               2220.0              5.22   31.3
+      WhatsApp     52.24 346028        15111          151.0               3457.0              4.37   18.8
+ Google Search    154.19 371949        11022          415.0              13990.0              2.96    4.0
+Offline/Events    293.20 407888        14249          719.0              20577.0              3.49    2.4
+   Paid Social    173.54 694408         5544          250.0              31303.0              0.80    1.1
+    Influencer    185.91 380785         4526          488.0              41077.0              1.19    0.8
+
+=== Q15: Quarterly best vs worst campaign per channel (ROW_NUMBER) ===
+       channel            campaign_name  roi_x label
+         Email          Email 2025Q3 #2  65.60  Best
+         Email          Email 2025Q4 #1  14.50 Worst
+ Google Search  Google Search 2025Q2 #1   5.51  Best
+ Google Search  Google Search 2025Q1 #1   1.62 Worst
+    Influencer     Influencer 2024Q4 #2   1.61  Best
+    Influencer     Influencer 2025Q2 #1  -0.28 Worst
+Offline/Events Offline/Events 2025Q3 #1   4.91  Best
+Offline/Events Offline/Events 2025Q1 #3  -0.17 Worst
+   Paid Social    Paid Social 2024Q4 #1   2.67  Best
+   Paid Social    Paid Social 2024Q2 #1  -0.04 Worst
+      WhatsApp       WhatsApp 2024Q1 #2  34.48  Best
+      WhatsApp       WhatsApp 2024Q1 #3   6.59 Worst
+
+=== Q16: NPS by dealer with promoter/detractor split ===
+         dealer_name region  responses  promoter_pct  detractor_pct   nps
+      Patna Motors 1   East        454           6.2           72.0 -65.9
+    Kolkata Motors 1   East        415           6.7           71.6 -64.8
+      Patna Motors 2   East        438           6.2           70.8 -64.6
+    Kolkata Motors 2   East        442           6.8           69.0 -62.2
+  Hyderabad Motors 2  South        450          39.1           23.3  15.8
+Bhubaneswar Motors 2   East        435          40.7           24.6  16.1
+ Chandigarh Motors 2  North        420          40.2           23.8  16.4
+    Chennai Motors 1  South        382          40.6           23.3  17.3
+  Bangalore Motors 1  South        403          39.7           22.1  17.6
+       Pune Motors 1   West        411          40.6           22.6  18.0
+      Delhi Motors 1  North        438          41.3           22.4  18.9
+      Kochi Motors 1  South        420          41.9           22.9  19.0
+
+=== Q17: Do slow-service dealers have lower NPS? (join of two CTEs) ===
+    dealer_group  dealers  avg_tat_days  avg_nps
+High TAT dealers        4          4.97    -64.4
+   Other dealers       24          2.62     20.1
+
+=== Q18: Detractor themes from feedback comments ===
+            theme  detractor_comments  share_pct
+Pricing / Billing                 897       25.8
+    Service Delay                 845       24.3
+    App / Digital                 452       13.0
+   Delivery Delay                 445       12.8
+  Staff Behaviour                 408       11.7
+     Waiting Time                 397       11.4
+       No comment                  29        0.8
+
+=== Q19: Call centre - issue type: volume, handle time, resolution, negative sentiment ===
+         issue_type  calls  avg_handle_min  resolution_pct  negative_pct  share_of_all_negative_pct
+    Billing Dispute   5119            11.5            50.8          68.4                       48.1
+     Delivery Delay   4593             7.2            62.2          41.6                       26.2
+  Service Complaint   4295             7.3            65.4          19.3                       11.4
+      App/Technical   3762             7.1            70.6          16.1                        8.3
+      Product Query   3702             7.2            89.2           6.9                        3.5
+Booking/Appointment   3529             7.1            92.7           5.0                        2.4
+
+=== Q20: Agent scorecard with quartile ranking (NTILE) - bottom-quartile agents flagged ===
+agent_id  calls  aht_min  resolution_pct  csat  negative_pct  csat_quartile          action
+    A035    651      7.9            53.1  2.51          55.0              4 Coaching needed
+    A009    595      7.9            60.0  2.76          44.2              4 Coaching needed
+    A037    647      8.4            61.7  2.85          42.7              4 Coaching needed
+    A036    648      8.0            59.9  2.86          43.5              4 Coaching needed
+    A007    641      8.1            64.4  2.93          37.8              4 Coaching needed
+    A022    580      8.1            62.9  2.97          37.9              4 Coaching needed
+    A008    652      8.2            62.1  3.01          36.5              4 Coaching needed
+    A039    620      8.1            64.5  3.02          35.5              4 Coaching needed
+    A029    611      8.3            67.1  3.07          34.4              4 Coaching needed
+    A006    614      8.1            67.6  3.09          32.1              4 Coaching needed

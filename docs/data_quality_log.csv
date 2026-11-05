@@ -1,0 +1,13 @@
+table,issue,action,rows_affected
+sales,duplicate sale_id,dropped,90
+sales,null payment_mode,filled 'Unknown',180
+sales,amount > 3x product median (entry error),replaced with product median,15
+service_jobs,duplicate job_id,dropped,100
+service_jobs,null tat_days,filled with job_type median,200
+web_sessions,duplicate session_id,dropped,180
+web_sessions,null device,filled 'Unknown',600
+feedback,duplicate feedback_id,dropped,60
+feedback,null comment,set empty; excluded from theme analysis,120
+call_logs,duplicate call_id,dropped,100
+call_logs,inconsistent text case in issue_type,standardised to Title Case,220
+call_logs,null sentiment,filled 'Neutral',250

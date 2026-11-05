@@ -1,0 +1,7 @@
+issue_type,calls,avg_handle_min,resolution_pct,negative_pct,share_of_all_negative_pct
+Billing Dispute,5119,11.5,50.8,68.4,48.1
+Delivery Delay,4593,7.2,62.2,41.6,26.2
+Service Complaint,4295,7.3,65.4,19.3,11.4
+App/Technical,3762,7.1,70.6,16.1,8.3
+Product Query,3702,7.2,89.2,6.9,3.5
+Booking/Appointment,3529,7.1,92.7,5.0,2.4
